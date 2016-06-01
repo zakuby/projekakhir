@@ -7,6 +7,7 @@ class Home extends CI_Controller {
     parent::__construct();
     if(!$this->session->has_userdata('user'))
       redirect('user/login/', 'location');
+    $this->load->model('home');
   }
   
   public function index() {

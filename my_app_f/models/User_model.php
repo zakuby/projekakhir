@@ -19,6 +19,18 @@ class User_model extends CI_Model {
         return $query;
     return 0;
   }
+  
+  public function update($id, $bio){
+    $data = array (
+            'userid' => '$id',
+            'bio' => '$bio'
+    );
+    
+    if(!$this->db->replace('user_bio', $data))
+      if( !$this->db->set($array) && !$this->db->insert('mytable') ) 
+        return 0;
+    
+  }
 
 }
 

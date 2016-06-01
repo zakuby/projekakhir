@@ -5,7 +5,8 @@ class User extends CI_Controller {
 
     
 	public function register() {
-
+    if($this->session->has_userdata('user'))
+      redirect('user/login/', 'location');
 	}
   
   public function login() {
@@ -29,11 +30,23 @@ class User extends CI_Controller {
   }
   
   public function logout($id) {
-    
+    $this->session->set_userdata('user',$user);
+    redirect('/login', 'location');
   }
   
   public function update($id) {
+    if($this->session->userdata('user')['id']==$id) {
+      redirect('$id', 'location');
+    }
     
+    if(!empty($_POST['bio'])) {
+      $bio = $_POST['bio'];    
+      $this->load->model('user_model');
+      $this->user_model->update($id,$bio);
+      $this->load->view("user");
+    } else {
+      $this->load->view("update");
+    }
   }
   
   public function updatePhotoProfile($id) {
