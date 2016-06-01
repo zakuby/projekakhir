@@ -49,18 +49,30 @@ class User extends CI_Controller {
         redirect('user', 'location');
       
       echo "Error update_user_xx49";
-      show_404();
       
     } else {
       $this->load->view("update");
     }
   }
   
-  public function updatePhotoProfile($id) {
+  public function updatePhotoProfile() {
     
-  }
-  
-  public function friend($id) {
+    if(!$id = $this->session->userdata('user')['userid'])
+      redirect('user/login', 'location');
+    
+    if(!empty($_POST['photo'])) {
+      
+      $url = $_POST['photo'];    
+      $this->load->model('user_model');
+      
+      if($this->user_model->updatePhotoProfile($id,$url))
+        redirect('user', 'location');
+      
+      echo "Error update_photo_xx50";
+      
+    } else {
+      $this->load->view("update");
+    }
     
   }
   
