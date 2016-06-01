@@ -37,6 +37,7 @@ class User_model extends CI_Model {
             'bio' => '$bio'
     );
     
+    if(!$this->db->update('user_bio', $data, 'userid = $userid'))
       if( !$this->db->set($data) && !$this->db->insert('user_bio') ) 
         return 0;
       
