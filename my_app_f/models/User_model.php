@@ -124,7 +124,7 @@ class User_model extends CI_Model {
   public function notif($notif_id, $userid ) {
     
     $data = array (
-            'notif_id' => '$user_id',
+            'notif_id' => '$notif_id',
             'userid' => '$userid'
 			'status' => 1
     );
