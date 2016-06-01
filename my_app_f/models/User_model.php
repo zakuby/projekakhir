@@ -11,18 +11,18 @@ class User_model extends CI_Model {
   public function login($userid, $pass){
     
     $this->db->select('userid, username, password, level, nama');
-    $this->db->where('username', $user);
+    $this->db->where('username', $userid);
     
     $query = $this->db->get('user');
     
     if($query = $query->result_array()[0])
       if($pass == $this->encrypt->decode($query['password']) ) {
-        $out = array {
-          'userid' => query['userid'],
-          'username' => query['username'],
-          'level' => query['level'],
-          'nama' => query['nama'],
-        }
+        $out = array (
+          'userid' => $query['userid'],
+          'username' => $query['username'],
+          'level' => $query['level'],
+          'nama' => $query['nama'],
+        );
         return $out;
       }
     return 0;
@@ -86,22 +86,22 @@ class User_model extends CI_Model {
     $data = array (
             'userid1' => '$userid',
             'userid2' => '$userid',
-            'status' => 2;
+            'status' => 2
     );
     
     if(!$this->db->replace('friendship', $data))
       return 0;
   }
   
-  public function descUser($userid){
+  public function descUser($username){
     
     $this->db->select('u.userid, u.username, u.nama, ub.bio, upp.url, f.status');
     $this->db->from('user u');
-    $this->db->join('user_bio ub', 'u.userid' = 'ub.userid', 'left outer');
-    $this->db->join('user_photo_profile upp', 'u.userid' = 'upp.userid', 'left outer');
-    $this->db->join('friendship f', 'u.userid' = 'f.userid1', 'left outer');
-    $this->db->join('friendship f2', 'u.userid' = 'f2.userid2', 'left outer');
-    $this->db->where('userid', $userid);
+    $this->db->join('user_bio ub', 'u.userid = ub.userid', 'left outer');
+    $this->db->join('user_photo_profile upp', 'u.userid = upp.userid', 'left outer');
+    $this->db->join('friendship f', 'u.userid = f.userid', 'left outer');
+    $this->db->join('friendship f2', 'u.userid = f2.userid2', 'left outer');
+    $this->db->where('username', $username);
     
     $query = $this->db->get();
     if($query = $query->result_array()[0])

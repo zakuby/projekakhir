@@ -31,7 +31,7 @@ class User extends CI_Controller {
   
   public function logout() {
     $this->session->set_userdata('user',$user);
-    redirect('/login', 'location');
+    redirect('user/login', 'location');
   }
   
   public function update() {
@@ -61,8 +61,8 @@ class User extends CI_Controller {
       redirect('user/login', 'location');
     
     if(!empty($_POST['photo'])) {
-      
       $url = $_POST['photo'];    
+      
       $this->load->model('user_model');
       
       if($this->user_model->updatePhotoProfile($id,$url))
@@ -80,8 +80,9 @@ class User extends CI_Controller {
     
   }
   
-  public function profile($id) {
-    
+  public function profile($username) {
+    $this->load->model('user_model');
+    print_r($this->user_model->descUser($username));
   }
   
   public function getlist($jumlah, $keyword = null) {
