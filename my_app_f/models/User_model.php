@@ -8,10 +8,14 @@ class User_model extends CI_Model {
     $this->load->library('encrypt');
   }
 
+  public function register($username, $password, ) {
+    if( !$this->db->set($data) && !$this->db->insert('user_photo_profile') ) 
+  }
+  
   public function login($userid, $pass){
     
     $this->db->select('userid, username, password, level, nama');
-    $this->db->where('username', $userid);
+    $this->db->where('LOWER(username)', strtolower($userid));
     
     $query = $this->db->get('user');
     
@@ -28,7 +32,7 @@ class User_model extends CI_Model {
     return 0;
   }
   
-  public function update($userid, $bio){
+  public function updateBio($userid, $bio){
     
     $data = array (
             'userid' => '$userid',
@@ -101,11 +105,11 @@ class User_model extends CI_Model {
     $this->db->join('user_photo_profile upp', 'u.userid = upp.userid', 'left outer');
     $this->db->join('friendship f', 'u.userid = f.userid', 'left outer');
     $this->db->join('friendship f2', 'u.userid = f2.userid2', 'left outer');
-    $this->db->where('username', $username);
+    $this->db->where('LOWER(u.username)', strtolower($username));
     
     $query = $this->db->get();
-    if($query = $query->result_array()[0])
-      return $query;
+    if($query = $query->result_array())
+      return $query[0];
     return 0;
   }
   

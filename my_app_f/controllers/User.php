@@ -82,11 +82,8 @@ class User extends CI_Controller {
   
   public function profile($username) {
     $this->load->model('user_model');
-    print_r($this->user_model->descUser($username));
-  }
-  
-  public function getlist($jumlah, $keyword = null) {
-    
+    if($this->user_model->descUser($username))
+      print_r($this->user_model->descUser($username));
   }
   
 }
