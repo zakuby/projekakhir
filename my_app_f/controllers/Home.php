@@ -7,10 +7,18 @@ class Home extends CI_Controller {
     parent::__construct();
     if(!$this->session->has_userdata('user'))
       redirect('user/login/', 'location');
-    $this->load->model('home');
+    
+    $this->load->model('home_model');
   }
   
   public function index() {
     $this->load->view('home');
+    if($_POST['load']==true) {
+      
+    }
+  }
+  
+  private function load9Post() {
+    
   }
 }

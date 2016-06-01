@@ -16,7 +16,7 @@ class User extends CI_Controller {
     
     if( !empty($_POST['username']) && !empty($_POST['password']) ) {
       $user = $this->user_model->login($_POST['username'],$_POST['password']);
-    
+      
       if($user) {
         $this->session->set_userdata('user',$user);
         redirect('/home/', 'location');
@@ -29,21 +29,28 @@ class User extends CI_Controller {
     $this->load->view('login');
   }
   
-  public function logout($id) {
+  public function logout() {
     $this->session->set_userdata('user',$user);
     redirect('/login', 'location');
   }
   
-  public function update($id) {
-    if($this->session->userdata('user')['id']==$id) {
-      redirect('$id', 'location');
-    }
+  public function update() {
+    print_r($this->session->userdata('user'));
+    
+    if(!$id = $this->session->userdata('user')['userid'])
+      redirect('user/login', 'location');
     
     if(!empty($_POST['bio'])) {
+      
       $bio = $_POST['bio'];    
       $this->load->model('user_model');
-      $this->user_model->update($id,$bio);
-      $this->load->view("user");
+      
+      if($this->user_model->update($id,$bio))
+        redirect('user', 'location');
+      
+      echo "Error update_user_xx49";
+      show_404();
+      
     } else {
       $this->load->view("update");
     }

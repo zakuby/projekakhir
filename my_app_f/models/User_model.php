@@ -10,13 +10,21 @@ class User_model extends CI_Model {
 
   public function login($user, $pass){
     
-    $this->db->select('username, password, level, nama');
+    $this->db->select('userid, username, password, level, nama');
     $this->db->where('username', $user);
+    
     $query = $this->db->get('user');
     
     if($query = $query->result_array()[0])
-      if($pass == $this->encrypt->decode($query['password']) )
-        return $query;
+      if($pass == $this->encrypt->decode($query['password']) ) {
+        $out = array {
+          'userid' => query['userid'],
+          'username' => query['username'],
+          'level' => query['level'],
+          'nama' => query['nama'],
+        }
+      }
+        return $out;
     return 0;
   }
   
@@ -29,7 +37,6 @@ class User_model extends CI_Model {
     if(!$this->db->replace('user_bio', $data))
       if( !$this->db->set($array) && !$this->db->insert('mytable') ) 
         return 0;
-    
   }
 
 }
