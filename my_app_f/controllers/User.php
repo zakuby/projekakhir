@@ -34,7 +34,7 @@ class User extends CI_Controller {
     redirect('user/login', 'location');
   }
   
-  public function update() {
+  public function updateBio() {
     print_r($this->session->userdata('user'));
     
     if(!$id = $this->session->userdata('user')['userid'])
@@ -49,6 +49,33 @@ class User extends CI_Controller {
         redirect('user', 'location');
       
       echo "Error update_user_xx49";
+      
+    } else {
+      $this->load->view("update");
+    }
+  }
+
+  
+  public function updateProfile() {
+    print_r($this->session->userdata('user'));
+    
+    if(!$id = $this->session->userdata('user')['userid'])
+      redirect('user/login', 'location');
+    
+    if(!empty($_POST['profile'])) {
+      
+      $profile = array(
+        'nama' = $_POST['nama'];    
+        'ttl' = $_POST['ttl'];    
+        'email' = $_POST['email'];
+      );
+      
+      $this->load->model('user_model');
+      
+      if($this->user_model->updateProfile($id,$profile))
+        redirect('user', 'location');
+      
+      echo "Error update_user_xx51";
       
     } else {
       $this->load->view("update");
@@ -81,9 +108,12 @@ class User extends CI_Controller {
   }
   
   public function profile($username) {
+    
     $this->load->model('user_model');
+    
     if($this->user_model->descUser($username))
       print_r($this->user_model->descUser($username));
+    
   }
   
 }

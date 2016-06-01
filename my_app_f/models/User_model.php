@@ -16,7 +16,6 @@ class User_model extends CI_Model {
     
     $this->db->select('userid, username, password, level, nama');
     $this->db->where('LOWER(username)', strtolower($userid));
-    
     $query = $this->db->get('user');
     
     if($query = $query->result_array()[0])
@@ -25,7 +24,7 @@ class User_model extends CI_Model {
           'userid' => $query['userid'],
           'username' => $query['username'],
           'level' => $query['level'],
-          'nama' => $query['nama'],
+          'nama' => $query['nama']
         );
         return $out;
       }
@@ -35,11 +34,9 @@ class User_model extends CI_Model {
   public function updateBio($userid, $bio){
     
     $data = array (
-            'userid' => '$userid',
             'bio' => '$bio'
     );
     
-    if(!$this->db->replace('user_bio', $data))
       if( !$this->db->set($data) && !$this->db->insert('user_bio') ) 
         return 0;
       
@@ -48,11 +45,10 @@ class User_model extends CI_Model {
   public function updatePhotoProfile($userid, $link){
     
     $data = array (
-            'userid' => '$userid',
             'url' => '$link'
     );
     
-    if(!$this->db->replace('user_photo_profile', $data))
+    if(!$this->db->update('user_photo_profile', $data, 'userid = $userid'))
       if( !$this->db->set($data) && !$this->db->insert('user_photo_profile') ) 
         return 0;
       
