@@ -43,6 +43,18 @@ class User_model extends CI_Model {
       
   }
   
+  public function updateProfile($userid, $profile ){
+    
+    $data = array (
+            'bio' => '$bio'
+    );
+    
+    if(!$this->db->update('user_bio', $data, 'userid = $userid'))
+      if( !$this->db->set($data) && !$this->db->insert('user_bio') ) 
+        return 0;
+      
+  }
+  
   public function updatePhotoProfile($userid, $link){
     
     $data = array (
