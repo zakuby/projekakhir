@@ -121,7 +121,17 @@ class User_model extends CI_Model {
       return $query[0];
     return 0;
   }
-  
+  public function notif($notif_id, $userid ) {
+    
+    $data = array (
+            'notif_id' => '$user_id',
+            'userid' => '$userid'
+			'status' => 1
+    );
+    
+    if(!$this->db->replace('notif', $data))
+      return 0;
+  }  
   
 }
 
